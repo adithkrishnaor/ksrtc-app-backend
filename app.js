@@ -42,7 +42,6 @@ app.post("/login",(req,res)=>{
             if(response.length>0)
                 {
                     let dbpass =response[0].pass
-                    console.log(dbpass)
                     bcryptjs.compare(input.pass,dbpass,(error,isMatch)=>{
                         if (isMatch) {
                             jwt.sign({email:input.email},"ksrtc-app",{expiresIn:"1d"},
