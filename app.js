@@ -4,11 +4,11 @@ const cors = require("cors")
 const bcryptjs = require("bcryptjs")
 const { usermodel } = require("./models/users")
 const { busmodel } = require("./models/buses")
+const jwt=require("jsonwebtoken")
 
 const app = express()
 app.use(express.json())
 app.use(cors())
-
 
 mongoose.connect("mongodb+srv://adith:adith@cluster0.7mlz85p.mongodb.net/ksrtc-app?retryWrites=true&w=majority&appName=Cluster0")
 
@@ -34,6 +34,35 @@ app.post("/signup", async (req, res) => {
     newusers.save()
     res.json({ "status": "signup success" })
 })
+
+app.post("/login",(req,res)=>{
+    let input =req.body
+    usermodel.find({"email":req.body.email}).then(
+        (response)=>{
+            if(response.length>0)
+                {
+                    let dbpass =response[0].pass
+                    bcryptjs.compare(input.pass,dbpass,(error,isMatch)=>{
+                        if (isMatch) {
+                            jwt.sign({email:input.email},"ksrtc-app",{expiresIn:"1d"},
+                                (error,token)=>{
+                                if (error) {
+                                    res.json({"status":"unable to create token"})
+                                } else {
+                                    res.json({"status":"success","name":response[0]._id,"token":token})
+                                }
+                            })
+                        } else {
+                            res.json({"status":"incorrect password"})
+                        }
+                    })
+                }
+            else{
+                res.json({"status":"user not found"})
+            }
+        }
+    )
+    })
 
 app.listen(8080, () => {
     console.log("Server started on port 8080")
