@@ -64,6 +64,29 @@ app.post("/login",(req,res)=>{
     )
     })
 
+    app.post("/viewall",(req,res)=>{
+        let token = req.headers["token"]
+        jwt.verify(token,"ksrtc-app",(error,decoded)=>{
+            if (error) {
+                res.json({"status":"Unauthorized access"})
+            } else {
+                if(decoded)
+                    {
+                        usermodel.find().then(
+                            (response)=>{
+                                res.json(response)
+                            }
+                        ).catch(
+                            (error)=>{
+                                res.json(error)
+                            }
+                        )
+                    }
+            }
+        })
+        
+    })
+
 app.listen(8080, () => {
     console.log("Server started on port 8080")
 })
