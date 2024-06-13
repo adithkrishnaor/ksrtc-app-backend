@@ -4,11 +4,11 @@ const cors = require("cors")
 const bcryptjs = require("bcryptjs")
 const { usermodel } = require("./models/users")
 const { busmodel } = require("./models/buses")
+const jwt=require("jsonwebtoken")
 
 const app = express()
 app.use(express.json())
 app.use(cors())
-
 
 mongoose.connect("mongodb+srv://adith:adith@cluster0.7mlz85p.mongodb.net/ksrtc-app?retryWrites=true&w=majority&appName=Cluster0")
 
