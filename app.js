@@ -12,6 +12,7 @@ app.use(cors())
 
 mongoose.connect("mongodb+srv://adith:adith@cluster0.7mlz85p.mongodb.net/ksrtc-app?retryWrites=true&w=majority&appName=Cluster0")
 
+
 app.post("/add", (req, res) => {
     let input = req.body
     let buses = new busmodel(input)
@@ -33,6 +34,7 @@ app.post("/signup", async (req, res) => {
     let newusers = new usermodel(input)
     newusers.save()
     res.json({ "status": "success" })
+  
 })
 
 app.post("/login",(req,res)=>{
@@ -87,6 +89,7 @@ app.post("/login",(req,res)=>{
     )
         
     //})
+
 
     app.post("/search",(req,res) => {
         let input =req.body

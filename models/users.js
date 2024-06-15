@@ -4,8 +4,8 @@ const schema=mongoose.Schema({
     "email":{type:String,require:true},
     "pno":{type:String,require:true},
     "gender":{type:String,require:true},
-    "pswd":{type:String,require:true},
-    "cpswd":{type:String,require:true}
+    "pass":{type:String,require:true},
+    "cpass":{type:String,require:true}
 })
 
 let usermodel=mongoose.model("users",schema)
