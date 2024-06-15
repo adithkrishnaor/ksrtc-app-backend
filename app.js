@@ -12,7 +12,8 @@ app.use(cors())
 
 mongoose.connect("mongodb+srv://adith:adith@cluster0.7mlz85p.mongodb.net/ksrtc-app?retryWrites=true&w=majority&appName=Cluster0")
 
-app.post("/addbus", (req, res) => {
+
+app.post("/add", (req, res) => {
     let input = req.body
     let buses = new busmodel(input)
     buses.save()
@@ -32,7 +33,8 @@ app.post("/signup", async (req, res) => {
     input.pass = hashedpswd
     let newusers = new usermodel(input)
     newusers.save()
-    res.json({ "status": "signup success" })
+    res.json({ "status": "success" })
+  
 })
 
 app.post("/login",(req,res)=>{
@@ -65,14 +67,14 @@ app.post("/login",(req,res)=>{
     })
 
     app.post("/viewall",(req,res)=>{
-        let token = req.headers["token"]
-        jwt.verify(token,"ksrtc-app",(error,decoded)=>{
-            if (error) {
-                res.json({"status":"Unauthorized access"})
-            } else {
-                if(decoded)
-                    {
-                        usermodel.find().then(
+        // let token = req.headers["token"]
+        // jwt.verify(token,"ksrtc-app",(error,decoded)=>{
+        //     if (error) {
+        //         res.json({"status":"Unauthorized access"})
+        //     } else {
+        //         if(decoded)
+        //             {
+                        busmodel.find().then(
                             (response)=>{
                                 res.json(response)
                             }
@@ -82,10 +84,12 @@ app.post("/login",(req,res)=>{
                             }
                         )
                     }
-            }
-        })
+        //   }
+        //}
+    )
         
-    })
+    //})
+
 
     app.post("/search",(req,res) => {
         let input =req.body
