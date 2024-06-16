@@ -93,7 +93,7 @@ app.post("/login",(req,res)=>{
 
     app.post("/search",(req,res) => {
         let input =req.body
-        usermodel.find(input).then(
+        busmodel.find(input).then(
             (data) => {
                 res.json(data)
             }
